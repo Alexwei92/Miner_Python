@@ -7,6 +7,7 @@ class Unary_op(Enum):
 	NEXT       = 1
 	ALWAYS     = 2
 	EVENTUALLY = 3
+	NOT	   = 4
 
 class Binary_op(Enum):
 	IMPLICATION = 1
