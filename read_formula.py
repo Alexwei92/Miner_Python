@@ -3,101 +3,104 @@
 from binary_tree import *
 from enum import Enum
 
-state = ['x1', 'x2']
+STATE          = ['x1','x2']
+OPERATOR       = ['ev_','alw_','not_','until_','and_','or_']
+SPECIAL_CHAR_1 = ['[',']','(',')','<','>',',']
+SPECIAL_CHAR_2 = ['>=','<=']
 
+# read the formula file
+def read_file(filename = "example_formula.txt"):
+    try:
+        f = open(filename, 'rt')
+        str = f.read()
+        f.close()
+        return str
+    except FileNotFoundError as err:
+        print(err)
 
-def check_is_state(str):
-    str.find(state)
-    
+def prep(str):
+    str = str.strip('\n')
+    str = str.replace(' ','')
+    return str
 
+def stat(str, show = True):
+    number_ev                = str.count('ev_')
+    number_alw               = str.count('alw_')
+    number_not               = str.count('not_')
+    number_until             = str.count('until_')
+    number_and               = str.count('and_')
+    number_or                = str.count('or_')
+    number_open_parenthesis  = str.count('(')
+    number_close_parenthesis = str.count(')')
+    number_open_bracket      = str.count('[')
+    number_close_bracket     = str.count(']')
 
-# def get_formula(formula_list, expected):
-#     if formula_list[0] == expected:
-#         del formula_list[0]
-#         return True
-#     return False
+    if show:
+        print("-"*30)
+        print("number of Eventually: ", number_ev)
+        print("number of Always: ", number_alw)
+        print("number of Negation: ", number_not)
+        print("number of Until: ", number_until)
+        print("number of Conjunction: ", number_and)
+        print("number of Disjunction: ", number_or)
+        print("number of Open parenthesis", number_open_parenthesis)
+        print("number of Close parenthesis", number_close_parenthesis)
+        print("number of Open bracket", number_open_bracket)
+        print("number of Close bracket", number_close_bracket)
+        print("-"*30)
 
-# def get_number(formula_list):
-#     if get_formula(formula_list, "("):
-#         x = get_sum(formula_list)
-#         if not get_formula(formula_list, ")"):
-#             raise ValueError("Missing close parenthesis")
-#         return x
-#     else:
-#         x = formula_list[0]
-#         if type(x) != type(0): return None
-#         del formula_list[0]
-#         return Tree(x, None, None)
-
-# def get_product(formula_list):
-#     a = get_number(formula_list)
-#     if get_formula(formula_list, "*"):
-#         b = get_product(formula_list)
-#         return Tree("*", a, b)
-#     return a
-
-# def get_sum(formula_list):
-#     a = get_product(formula_list)
-#     if get_formula(formula_list, "+"):
-#         b = get_sum(formula_list)
-#         return Tree("+", a, b)
-#     return a
-f = open('example_formula.txt', 'rt')
-data = f.read()
-f.close()
-print("The original formula:\n", data)
-#delete all the space
-data = data.replace(' ','')
-print("After Step 1:\n", data)
-
-number_ev    = data.count("ev_")
-number_alw   = data.count("alw_")
-number_not   = data.count("not")
-number_until = data.count("until_")
-number_and   = data.count("and")
-number_or    = data.count("or")
-print("-"*30)
-print("number of eventually: ", number_ev)
-print("number of always: ", number_alw)
-print("number of negation: ", number_not)
-print("number of until: ", number_until)
-print("number of conjunction: ", number_and)
-print("number of disjunction: ", number_or)
-print("-"*30)
-
-formula = list()
-index = 0
-while index < len(data):
-    if data[index:index+3] == 'ev_':
+    if number_open_parenthesis != number_close_parenthesis:
+        raise ValueError("The number of parenthesis do not match!")
+    if number_open_bracket != number_close_bracket:
+        raise ValueError("The number of bracket do not match!")
+        
+# read the character
+def get_formula(index, str, formula):
+    if str[index:index+3] == 'ev_':
         formula.append('ev_')
         index = index + 3
-    elif data[index:index+4] == 'alw_':
+        if str[index] != '[':
+            raise ValueError("Missing open bracket")
+    elif str[index:index+4] == 'alw_':
         formula.append('alw_')
         index = index + 4
-    elif data[index:index+3] == 'not':
-        formula.append('not')
-        index = index + 3
-    elif data[index:index+6] == 'until_':
+        if str[index] != '[':
+            raise ValueError("Missing open bracket")
+    elif str[index:index+4] == 'not_':
+        formula.append('not_')
+        index = index + 4
+    elif str[index:index+6] == 'until_':
         formula.append('until_')
         index = index + 6
-    elif data[index:index+3] == 'and':
-        formula.append('and')
+    elif str[index:index+4] == 'and_':
+        formula.append('and_')
+        index = index + 4
+    elif str[index:index+3] == 'or_':
+        formula.append('or_')
         index = index + 3
-    elif data[index:index+2] == 'or':
-        formula.append('or')
+    elif str[index:index+4] == 'inf_':
+        formula.append('inf_')
+        index = index + 4
+    elif str[index:index+2] == 'x1':
+        formula.append('x1')
         index = index + 2
-    elif data[index:index+3] == 'inf':
-        formula.append('inf')
-        index = index + 3
-    # elif (data[index]).isdigit() or data[index] == '.':
-    #     print("Yes")
-    #     index = index + 1
-    else:
-        formula.append(data[index])
+    elif str[index:index+2] == 'x2':
+        formula.append('x2')
+        index = index + 2
+    elif str[index] in SPECIAL_CHAR_1:
+        formula.append(str[index])
         index = index + 1
-print(formula)
+    elif str[index:index+2] in SPECIAL_CHAR_2:
+        formula.append(str[index:index+2])
+        index = index + 2
+    else:
+        index_end = index
+        while str[index_end].isdigit() or str[index_end] == '.':
+            index_end = index_end + 1
+        formula.append(str[index:index_end])
+        index = index_end
+    return index, formula  
 
-print(state[0])
-print(type(state[0]))
-
-
+# f2 = open('example_formula_output.txt', 'wt')
+# str = f2.write(str(formula))
+# f2.close()
