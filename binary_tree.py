@@ -22,5 +22,5 @@ def print_tree(tree):
 def print_tree_indented(tree, level=0):
     if tree is None: return
     print_tree_indented(tree.right, level+1)
-    print("  " * level + str(tree.cargo))
+    print("    " * level + str(tree.cargo))
     print_tree_indented(tree.left, level+1)    

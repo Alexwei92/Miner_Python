@@ -37,16 +37,16 @@ def stat(str, show = True):
 
     if show:
         print("-"*30)
-        print("number of Eventually: ", number_ev)
-        print("number of Always: ", number_alw)
-        print("number of Negation: ", number_not)
-        print("number of Until: ", number_until)
-        print("number of Conjunction: ", number_and)
-        print("number of Disjunction: ", number_or)
-        print("number of Open parenthesis", number_open_parenthesis)
-        print("number of Close parenthesis", number_close_parenthesis)
-        print("number of Open bracket", number_open_bracket)
-        print("number of Close bracket", number_close_bracket)
+        print("Number of Eventually: ", number_ev)
+        print("Number of Always: ", number_alw)
+        print("Number of Negation: ", number_not)
+        print("Number of Until: ", number_until)
+        print("Number of Conjunction: ", number_and)
+        print("Number of Disjunction: ", number_or)
+        print("Number of Open parenthesis", number_open_parenthesis)
+        print("Number of Close parenthesis", number_close_parenthesis)
+        print("Number of Open bracket", number_open_bracket)
+        print("Number of Close bracket", number_close_bracket)
         print("-"*30)
 
     if number_open_parenthesis != number_close_parenthesis:
@@ -87,12 +87,19 @@ def get_formula(index, str, formula):
     elif str[index:index+2] == 'x2':
         formula.append('x2')
         index = index + 2
-    elif str[index] in SPECIAL_CHAR_1:
-        formula.append(str[index])
-        index = index + 1
     elif str[index:index+2] in SPECIAL_CHAR_2:
         formula.append(str[index:index+2])
         index = index + 2
+    elif str[index] in SPECIAL_CHAR_1:
+        if str[index] == '[':
+            index_end = index
+            while str[index_end] != ']':
+                index_end = index_end + 1
+            formula.append(str[index:index_end+1])
+            index = index_end + 1
+        else:
+            formula.append(str[index])
+            index = index + 1
     else:
         index_end = index
         while str[index_end].isdigit() or str[index_end] == '.':
