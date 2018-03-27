@@ -1,5 +1,6 @@
+#!/usr/local/bin/python3
 
-# Define the tree and node
+# Define the Tree and Node
 class Tree:
     def __init__(self, cargo, left=None, right=None):
         self.cargo = cargo
@@ -9,15 +10,16 @@ class Tree:
     def __str__(self):
         return str(self.cargo)
 
-# Print the tree formula
+# Print the Tree formula
 def print_tree(tree):
     if tree is None: return
     print_tree(tree.left)
     print(tree.cargo, end="")
     print_tree(tree.right)
 
-# Print the tree structure
-# The most left node is the root, the most right nodes are the leaves
+# Print the Tree structure
+# (Note: The most left node is the root, the most right nodes are the leaves.
+# Downward is left, upward is right)
 def print_tree_indented(tree, level=0):
     if tree is None: return
     print_tree_indented(tree.right, level+1)

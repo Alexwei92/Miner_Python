@@ -3,6 +3,7 @@
 import sys
 from binary_tree import print_tree, print_tree_indented
 
+# Print out control
 def print_out(value, flag, show):
 	if not show: return
 	else: 
@@ -24,3 +25,12 @@ def print_out(value, flag, show):
 			print_tree_indented(value)
 		else:
 			sys.exit("\033[1;31;47m\tError: Unrecognized flag to print_out!\t\033[0m")
+
+# Write to a file
+def write_file(filename = "example_output.txt", Output = None):
+    try:
+        f = open(filename, 'wt')
+        str = f.write(str(Output))
+        f.close()
+    except:
+        sys.exit("\033[1;31;47m Error: Unable to write to '%s'. \033[0m" %filename)

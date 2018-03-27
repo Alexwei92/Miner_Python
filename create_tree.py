@@ -1,9 +1,9 @@
 #!/usr/local/bin/python3
+
 from read_formula import *
 from binary_tree import Tree
-import math
+from fractions import Fraction
 import numpy as np
-
 
 # Get the position of open & close parenthesis
 def index_parenthesis(formula_list):
@@ -16,7 +16,7 @@ def index_parenthesis(formula_list):
 			index_close.append(index)
 	return index_open, index_close
 
-# Compress the list
+# Compress the list with sublist
 def compress_list(formula_list):
 	index_open, index_close = index_parenthesis(formula_list)
 	while index_open:
@@ -28,17 +28,27 @@ def compress_list(formula_list):
 		index_open, index_close = index_parenthesis(formula_list)
 	return formula_list
 
+# Check if is a fraction expression
+def check_fraction(str):
+	if str.count('/') > 0:
+		return Fraction(str)
+	else: return str
+
 # Convert the content in bracket
 def convert_bracket(str):
 	try:
 		str = str.replace('inf_','inf')
 		str = str.split(",")
-		print(str)
 		if len(str) != 2:
-			sys.exit("\033[1;31;47m SyntaxError: Improper use of bracket! \033[0m")	
-		return [float(str[0]), float(str[1])]
+			sys.exit("\033[1;31;47m SyntaxError: Missing content in bracket! \033[0m")	
+		return [float(check_fraction(str[0])), float(check_fraction(str[1]))]
 	except: 
 		sys.exit("\033[1;31;47m SyntaxError: Unknown Error in bracket! \033[0m")
+
+# Convert the predicate formula
+# !!!Need to add in the future!!!
+def convert_predict(formula_list):
+	return formula_list
 
 # Create the tree
 def get_tree(formula_list):
@@ -85,4 +95,4 @@ def get_tree(formula_list):
 			right = get_tree(formula_list[2])
 			return Tree("until",left,right)
 	else:
-		return Tree(formula_list, None, None)
+		return Tree(convert_predict(formula_list), None, None)
