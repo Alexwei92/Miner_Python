@@ -60,4 +60,3 @@ if __name__ == '__main__':
 	tree = get_tree(formula_list)
 	print_out(tree, "tree_formula", SHOW_TREE_FORM)
 	print_out(tree, "tree_structure", SHOW_TREE_STRUC)
-	
