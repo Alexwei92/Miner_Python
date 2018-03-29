@@ -3,8 +3,10 @@
 import sys
 from create_tree import *
 from binary_tree import *
-from other import print_out
-
+import numpy as np
+from other import*
+from Eval_Formula import *
+from fractions import Fraction
 # Print-out control panel
 #########################
 SHOW_RAW        = True
@@ -60,3 +62,22 @@ if __name__ == '__main__':
 	tree = get_tree(formula_list)
 	print_out(tree, "tree_formula", SHOW_TREE_FORM)
 	print_out(tree, "tree_structure", SHOW_TREE_STRUC)
+	ind = tree.left
+	ind = ind.cargo
+
+	signal = np.random.randn(2, 100)
+	time = np.linspace(0,10,100)
+
+	print(np.amax(time))
+	name = ["x1", "x2"]
+	system = STL_Sys(name,signal,time)
+	value, interval = get_value(system,tree)
+	print("result is ", value)
+
+
+
+
+
+
+
+
