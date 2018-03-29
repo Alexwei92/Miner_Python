@@ -1,10 +1,10 @@
 #!/usr/local/bin/python3
 
 import sys
-from cal_robustness import Robustness
-from other import*
+from time import time
+from cal_robustness import*
 import numpy as np
-from Eval_Formula import *
+
 # Print-out control panel
 class OPTION:
 	def __init__(self):
@@ -18,6 +18,7 @@ class OPTION:
 
 
 if __name__ == '__main__':
+
 	Robust = Robustness(sys.argv, OPTION())
 	Robust.BiTree()
 
@@ -25,5 +26,7 @@ if __name__ == '__main__':
 	time = np.linspace(0,10,100)
 	name = ['x1', 'x2']
 	system = STL_Sys(name,signal,time)
+
 	value, interval = Robust.Eval(system)
 	print(value)
+

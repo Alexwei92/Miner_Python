@@ -208,6 +208,11 @@ class Robustness:
 
 
 
+class STL_Sys:
+    def __init__(self,name,signal,time):
+        self.name=name
+        self.signal=signal
+        self.time=time
 
 
 
