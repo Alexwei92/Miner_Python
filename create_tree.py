@@ -88,11 +88,13 @@ def get_tree(formula_list):
 			right = get_tree(formula_list[2])
 			return Tree("or",left,right)
 	elif 'until_' in formula_list:
-		if len(formula_list) != 3:
+		if len(formula_list) != 4:
 			sys.exit("\033[1;31;47m SyntaxError: Improper use of until_! \033[0m")
 		else:
 			left = get_tree(formula_list[0])
-			right = get_tree(formula_list[2])
+			temp = formula_list[2:]
+			temp.insert(0, 'ev_')
+			right = get_tree(temp)
 			return Tree("until",left,right)
 	else:
 		return Tree(convert_predict(formula_list), None, None)

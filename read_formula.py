@@ -60,7 +60,7 @@ def stat(str, STATE, SHOW = True):
         sys.exit("\033[1;31;47m SyntaxError: The number of parenthesis does not match! \033[0m")
     if number_open_bracket != number_close_bracket:
         sys.exit("\033[1;31;47m SyntaxError: The number of bracket does not match! \033[0m")
-    if (number_ev + number_alw) != number_open_bracket:
+    if (number_ev + number_alw + number_until) != number_open_bracket:
         sys.exit("\033[1;31;47m SyntaxError: Missing bracket in the formula! \033[0m")
     if SHOW:
         print("-"*50)
@@ -104,8 +104,8 @@ def get_formula(index, str, formula, STATE):
     elif str[index:index+6] == 'until_':
         formula.append('until_')
         index = index + 6
-        if str[index] != '(':
-            sys.exit("\033[1;31;47m SyntaxError: Missing open parenthesis! \033[0m")
+        if str[index] != '[':
+            sys.exit("\033[1;31;47m SyntaxError: Missing open bracket! \033[0m")
     elif str[index:index+4] == 'and_':
         formula.append('and_')
         index = index + 4
