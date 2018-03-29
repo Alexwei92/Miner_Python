@@ -28,7 +28,7 @@ def read_file(filename = "example_formula.txt"):
         if not str:
             sys.exit("\033[1;31;47m Error: File '%s' is empty. \033[0m" %filename)
     except FileNotFoundError as err:
-        sys.exit(err)
+        sys.exit("\033[1;31;47m %s \033[0m" %err)
     else:
         return str
 
