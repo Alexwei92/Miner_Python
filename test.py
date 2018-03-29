@@ -67,8 +67,6 @@ if __name__ == '__main__':
 
 	signal = np.random.randn(2, 100)
 	time = np.linspace(0,10,100)
-
-	print(np.amax(time))
 	name = ["x1", "x2"]
 	system = STL_Sys(name,signal,time)
 	value, interval = get_value(system,tree)

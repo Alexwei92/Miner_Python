@@ -65,9 +65,25 @@ def get_value(system, tree=[],interval=[]):
 
     elif tree.cargo == "until":
         left = tree.left
-        right = tree.right
-        t_left = min(interval)
-        t_right = max(interval)
+        right_right = tree.right.right
+        right_left = tree.right.left
+        value_left, interval_left = get_value(system,left,interval)
+        if len(system.time) > 1:
+           delta_t = system.time[1] - system.time[0]
+        value = np.empty([1])
+        for index in range(1,len(interval_left)):
+            interval_1 = np.array([interval[0],interval[0] + (index-1)*delta_t])
+            value_left, interval_1 = get_value(system, left, interval_1)
+            value_1 = np.min(value_left)
+            start_time = interval_left[0] + (index-1)*delta_t
+            interval_un =  np.array([start_time, start_time + right_left[1]])
+            value_2_a, interval_un = get_value(system,right_right,interval_un)
+            value_2 = np.min(value_2_a)
+            value_t =np.min(value_1,value_2)
+            value = np.append(value, value_t)
+
+        value = np.max(value)
+        return value, interval_left
 
     elif tree.cargo[1] == "<" or  tree.cargo[1] == "<=":
          pi = tree.cargo[2]
