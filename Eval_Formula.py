@@ -100,10 +100,6 @@ def get_value(system, tree=[],interval=[]):
              start_time = np.min(time)
          id_start = (np.abs(time - start_time)).argmin()
          id_end  = (np.abs(time - end_time)).argmin()
-#         value = np.empty([1])
-#         for index in range(id_start,id_end):
-#            value_t = pi-signal[index]
-#             value = np.append(value, value_t)
          value = pi - signal[id_start:id_end]
          return value, interval
 
