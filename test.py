@@ -7,22 +7,23 @@ import numpy as np
 from Eval_Formula import *
 # Print-out control panel
 class OPTION:
-	SHOW_RAW        = True
-	SHOW_PREP       = False
-	SHOW_LIST       = True
-	SHOW_COMP_LIST  = False
-	SHOW_TREE_FORM  = False
-	SHOW_TREE_STRUC = True
-	SHOW_STAT		= True
+	def __init__(self):
+		self.SHOW_RAW        = True
+		self.SHOW_PREP       = False
+		self.SHOW_LIST       = True
+		self.SHOW_COMP_LIST  = False
+		self.SHOW_TREE_FORM  = False
+		self.SHOW_TREE_STRUC = True
+		self.SHOW_STAT		= True
 
 
 if __name__ == '__main__':
-	Robust = Robustness(sys.argv, OPTION()).BiTree()
-	print(type(Robust))
+	Robust = Robustness(sys.argv, OPTION())
+	Robust.BiTree()
+
 	signal = np.random.randn(2,100)
 	time = np.linspace(0,10,100)
 	name = ['x1', 'x2']
 	system = STL_Sys(name,signal,time)
-
-#	value,intervl= get_value(system, Robust.tree)
-#	print(value)
+	value, interval = Robust.Eval(system)
+	print(value)
