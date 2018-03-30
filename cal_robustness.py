@@ -156,7 +156,7 @@ class Robustness:
 				interval_1 = np.array([interval[0],interval[0] + (index-1)*delta_t])
 				value_left, interval_1 = self.Eval(system, interval_1)
 				value_1 = np.min(value_left)
-				start_time = interval_left[0] + (index-1)*delta_t
+				start_time = interval_left[0] + (index-1)*delta_t+ right_left[0]
 				interval_un =  np.array([start_time, start_time + right_left[1]])
 				self.tree = tree.right.right
 				value_2_a, interval_un = self.Eval(system, interval_un)
