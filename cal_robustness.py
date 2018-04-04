@@ -212,6 +212,7 @@ class Robustness:
 		elif tree.cargo[1] in ['>=', '>']:
 			ind_name = system.name.index(tree.cargo[0])
 			signal = system.signal[ind_name]
+			print(type(tree.cargo[2]))
 			time_values = self.GetTimeValues(system,interval)
 			id_duration =   np.where(np.logical_and(system.time >= time_values[0], system.time <= time_values[-1]))[0]
 			val_array = signal[id_duration] + tree.cargo[2]
