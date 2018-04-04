@@ -118,7 +118,7 @@ class Robustness:
 			return 0
 		if len(interval) == 0:
 			interval = np.array([0,0])
-			print('TBD')
+
 
 		if tree.cargo == 'ev':
 			phi_interval = tree.left.cargo
@@ -132,9 +132,9 @@ class Robustness:
 				val_array = np.array([val_array, val_array[-1]])
 			value_arr = np.empty([1])
 			time_arr = np.empty([1])
-			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + phi_interval[0]))
+			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + phi_interval[0]).all())
 			for index in range(1, len(time_values[find_interval])):
-				find_phi = np.where(np.logical_and(time_values >= time_values[index -1], time_values <= time_values[index -1] + phi_interval[-1]-phi_interval[0]))
+				find_phi = np.where(np.logical_and(time_values >= time_values[index -1], time_values <= time_values[index -1] + phi_interval[-1]-phi_interval[0]).all())
 				value_arr = np.append(value_arr, np.max(val_array[index -1 :index + len(time_values[find_phi]) - 1]))
 				time_arr = np.append(time_arr, time_values[index-1]-phi_interval[0])
 			return value_arr, time_arr
@@ -151,9 +151,9 @@ class Robustness:
 				val_array = np.array([val_array, val_array[-1]])
 			value_arr = np.empty([1])
 			time_arr = np.empty([1])
-			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + phi_interval[0]))
+			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + phi_interval[0]).all())
 			for index in range(1, len(time_values[find_interval])):
-				find_phi = np.where(np.logical_and(time_values >= time_values[index -1], time_values <= time_values[index -1] + phi_interval[-1]-phi_interval[0]))
+				find_phi = np.where(np.logical_and(time_values >= time_values[index -1], time_values <= time_values[index -1] + phi_interval[-1]-phi_interval[0]).all())
 				value_arr = np.append(value_arr, np.min(val_array[index -1 :index + len(time_values[find_phi]) - 1]))
 				time_arr = np.append(time_arr, time_values[index-1]-phi_interval[0])
 			return value_arr, time_arr
@@ -171,8 +171,8 @@ class Robustness:
 			if len(val_array1) != len(time_values1) or len(val_array2) != len(time_values2):
 				print('RobustAnd: lengths of time steps and signal are different.')
 
-			start_time = np.max(time_values1[0], time_values2[0])
-			end_time   = np.min(time_values1[-1],time_values2[-1])
+			start_time = np.max(np.array(time_values1[0], time_values2[0]))
+			end_time   = np.min(np.array(time_values1[-1], time_values2[-1]))
 
 			index_and = np.where(np.logical_and(time_values1 >= start_time, time_values1 <= end_time))
 			time_values = time_values1[index_and]
@@ -188,8 +188,8 @@ class Robustness:
 			if len(val_array1) != len(time_values1) or len(val_array2) != len(time_values2):
 				print('RobustAnd: lengths of time steps and signal are different.')
 
-			start_time = np.max(time_values1[0], time_values2[0])
-			end_time   = np.min(time_values1[-1],time_values2[-1])
+			start_time = np.max(np.array(time_values1[0], time_values2[0]))
+			end_time   = np.min(np.array(time_values1[-1], time_values2[-1]))
 
 			index_and = np.where(np.logical_and(time_values1 >= start_time, time_values1 <= end_time))
 			time_values = time_values1[index_and]
@@ -212,7 +212,6 @@ class Robustness:
 		elif tree.cargo[1] in ['>=', '>']:
 			ind_name = system.name.index(tree.cargo[0])
 			signal = system.signal[ind_name]
-			print(type(tree.cargo[2]))
 			time_values = self.GetTimeValues(system,interval)
 			id_duration =   np.where(np.logical_and(system.time >= time_values[0], system.time <= time_values[-1]))[0]
 			val_array = signal[id_duration] + tree.cargo[2]

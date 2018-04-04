@@ -28,5 +28,5 @@ if __name__ == '__main__':
 	system = STL_Sys(name,signal,time)
 
 	value, interval = Robust.Eval(system)
-	print(len(value))
+	print(value)
 
