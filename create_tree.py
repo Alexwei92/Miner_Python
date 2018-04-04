@@ -29,10 +29,13 @@ def compress_list(formula_list):
 	return formula_list
 
 # Check if is a fraction expression
-def check_fraction(str):
-	if str.count('/') > 0:
-		return Fraction(str)
-	else: return str
+def get_fraction(str):
+	try:
+		if str.count('/') > 0:
+			return Fraction(str)
+		else: return str
+	except:
+		sys.exit("\033[1;31;47m Error: Unknown error when converting the fraction! \033[0m")
 
 # Convert the content in bracket
 def convert_bracket(str):
@@ -41,14 +44,21 @@ def convert_bracket(str):
 		str = str.split(",")
 		if len(str) != 2:
 			sys.exit("\033[1;31;47m SyntaxError: Missing content in bracket! \033[0m")	
-		return [float(check_fraction(str[0])), float(check_fraction(str[1]))]
+		elif float(get_fraction(str[0])) > float(get_fraction(str[1])):
+			sys.exit("\033[1;31;47m SyntaxError: In [a, b], b should be larger than a! \033[0m")
+		return [float(get_fraction(str[0])), float(get_fraction(str[1]))]
 	except: 
 		sys.exit("\033[1;31;47m SyntaxError: Unknown Error in bracket! \033[0m")
 
 # Convert the predicate formula
 # !!!Need to add in the future!!!
 def convert_predict(formula_list):
-	return formula_list
+	new_list = list()
+	for x in formula_list:
+		if x.count('/') > 0 or x.count('.') > 0 or x.isdigit():
+			new_list.append(float(get_fraction(x)))
+		else: new_list.append(x)
+	return new_list
 
 # Create the tree
 def get_tree(formula_list):
