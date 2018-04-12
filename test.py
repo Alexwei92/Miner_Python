@@ -29,4 +29,3 @@ if __name__ == '__main__':
 
 	value, interval = Robust.Eval(system)
 	print(value)
-
