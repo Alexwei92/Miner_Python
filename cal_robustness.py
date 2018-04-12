@@ -132,9 +132,11 @@ class Robustness:
 				val_array = np.array([val_array, val_array[-1]])
 			value_arr = np.empty([1])
 			time_arr = np.empty([1])
-			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + phi_interval[0]).all())
+			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + \
+												   phi_interval[0]).all())
 			for index in range(1, len(time_values[find_interval])):
-				find_phi = np.where(np.logical_and(time_values >= time_values[index -1], time_values <= time_values[index -1] + phi_interval[-1]-phi_interval[0]).all())
+				find_phi = np.where(np.logical_and(time_values >= time_values[index -1], time_values <= time_values[index -1] + \
+												   phi_interval[-1]-phi_interval[0]).all())
 				value_arr = np.append(value_arr, np.max(val_array[index -1 :index + len(time_values[find_phi]) - 1]))
 				time_arr = np.append(time_arr, time_values[index-1]-phi_interval[0])
 			return value_arr, time_arr
@@ -151,9 +153,11 @@ class Robustness:
 				val_array = np.array([val_array, val_array[-1]])
 			value_arr = np.empty([1])
 			time_arr = np.empty([1])
-			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + phi_interval[0]).all())
+			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + \
+												   phi_interval[0]).all())
 			for index in range(1, len(time_values[find_interval])):
-				find_phi = np.where(np.logical_and(time_values >= time_values[index -1], time_values <= time_values[index -1] + phi_interval[-1]-phi_interval[0]).all())
+				find_phi = np.where(np.logical_and(time_values >= time_values[index -1], time_values <= time_values[index -1] + \
+												   phi_interval[-1]-phi_interval[0]).all())
 				value_arr = np.append(value_arr, np.min(val_array[index -1 :index + len(time_values[find_phi]) - 1]))
 				time_arr = np.append(time_arr, time_values[index-1]-phi_interval[0])
 			return value_arr, time_arr
@@ -200,7 +204,7 @@ class Robustness:
 			unt_interval = tree.cargo[1]
 			unt_interval = np.amax(np.array([np.array([unt_interval[0], unt_interval[-1]]),np.array([0, 0])]),axis= 0)
 			unt_interval[0] = np.min(unt_interval)
-			interval1 = np.array([interval[0], unt_interval[1]+interval[1]])
+			interval1 = np.array([interval[0], unt_interval[-1]+interval[1]])
 			interval2 = unt_interval + np.array(interval[0],interval[-1])
 			self.tree = tree.left
 			value_arr1, time_values1 = self.Eval(system,interval1)
@@ -214,28 +218,24 @@ class Robustness:
 
 
 			value_arr = np.empty([1])
-			time_arr = np.empty([1])
-			find_interval = np.where(np.logical_and(system.time >= interval[0], system.time <= interval[-1]).all())
+			value_arr_t = np.empty([1])
+			interval_t = np.array([np.maximum(time_values1[0], time_values2[0]), np.minimum(time_values1[-1], time_values2[-1])])
+			find_interval = np.where(np.logical_and(system.time >= interval_t[0], system.time <= interval_t[-1]).all())
+
 			for index in range(1, len(system.time[find_interval])):
-				phi_interval = 0
-				phi_interval_1 =np.array([interval[0], system.time[find_interval[index - 1]] ])
-				phi_interval_2 = np.array([system.time[find_interval[index - 1]] , interval[-1]])
-				self.tree = tree.left
-
-				value_arr1, time_values1 = self.Eval(system,phi_interval_1)
-				self.tree =tree.right
-				value_arr2, time_values2 = self.Eval(system,phi_interval_2)
-
-
-
-
-				find_phi = np.where(np.logical_and(time_values >= time_values[index -1], time_values <= time_values[index -1] + phi_interval[-1]-phi_interval[0]).all())
-				value_arr = np.append(value_arr, np.min(val_array[index -1 :index + len(time_values[find_phi]) - 1]))
-				time_arr = np.append(time_arr, time_values[index-1]-phi_interval[0])
-			return value_arr, time_arr
-
-
-
+				phi_interval = np.array([system.time[find_interval[index - 1]], system.time[find_interval[index - 1]] + \
+										 unt_interval[-1]])
+				find_interval_u = np.where(np.logical_and(system.time >= phi_interval[0], system.time <= phi_interval[-1]).all())
+				for index_u in range(1, len(system.time[find_interval_u])):
+					find_phi_1 = np.where(np.logical_and(time_values1 >=system.time[find_interval[index - 1]], time_values1 <= \
+														system.time[find_interval_u[index_u -1]]).all())
+					find_phi_2 = np.where(np.logical_and(time_values2 >= system.time[find_interval_u[index_u -1]], time_values2 <=\
+														 phi_interval[-1]).all())
+					value_arr_t = np.append(value_arr_t, np.amin(np.array([value_arr2[find_phi_2], np.amax(value_arr1[find_phi_1],\
+																										   axis=0)]), axis = 0))
+				value_arr =np.append(value_arr, np.amax(value_arr_t,axis =0))
+				value_arr_t =np.empty([1])
+			return value_arr, system.time[find_interval]
 
 		elif tree.cargo[1] in ['<', '<=']:
 			ind_name = system.name.index(tree.cargo[0])
