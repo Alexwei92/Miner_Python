@@ -156,7 +156,6 @@ class Robustness:
 			value_arr = np.empty([1])
 			time_arr = np.empty([1])
 
-
 			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + \
 												   phi_interval[0]))
 			for index in range(1, len(time_values[find_interval])):
@@ -220,7 +219,6 @@ class Robustness:
 				time_values2 = np.append(time_values2, time_values2[-1] + unt_interval[-1])
 				value_arr2 = np.append(value_arr2, value_arr2[-1])
 
-
 			value_arr = np.empty([1])
 			value_arr_t = np.empty([1])
 			interval_t = np.array([np.maximum(time_values1[0], time_values2[0]), np.minimum(time_values1[-1], time_values2[-1])])
@@ -247,6 +245,7 @@ class Robustness:
 			time_values = self.GetTimeValues(system, interval)
 			id_duration =   np.where(np.logical_and(system.time >= time_values[0], system.time <= time_values[-1]))[0]
 			val_array =  tree.cargo[2] - signal[id_duration]
+
 			return val_array, time_values
 
 		elif tree.cargo[1] in ['>=', '>']:
@@ -254,7 +253,8 @@ class Robustness:
 			signal = system.signal[ind_name]
 			time_values = self.GetTimeValues(system,interval)
 			id_duration =   np.where(np.logical_and(system.time >= time_values[0], system.time <= time_values[-1]))[0]
-			val_array = signal[id_duration] + tree.cargo[2]
+			print(tree.cargo[2])
+			val_array = signal[id_duration] - tree.cargo[2]
 			return val_array, time_values
 # Robustness calculation
 

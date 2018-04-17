@@ -4,7 +4,7 @@ import sys
 from time import time
 from cal_robustness import*
 import numpy as np
-
+import matplotlib.pyplot as plt
 # Print-out control panel
 class OPTION:
 	def __init__(self):
@@ -29,3 +29,6 @@ if __name__ == '__main__':
 
 	value, interval = Robust.Eval(system)
 	print(value)
+
+	plt.plot(time,signal[0],'r--',time,signal[1], 'g-')
+	plt.show()
