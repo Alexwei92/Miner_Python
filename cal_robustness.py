@@ -102,8 +102,9 @@ class Robustness:
 		if interval[-1] == float('inf'):
 			time_values = np.append(time_values, system.time[ind_ti:-1])
 		else:
-			ind_tf = np.nonzero(system.time >= interval[-1])
-			if len(ind_tf) == 0:
+			ind_tf = np.nonzero(system.time >= interval[-1])[0][0]
+
+			if not ind_tf:
 				time_values = np.append(time_values, system.time[ind_ti:-1], interval[-1])
 			elif system.time[ind_tf] == interval[-1]:
 				time_values = np.append(time_values, system.time[ind_ti:ind_tf])
@@ -128,8 +129,8 @@ class Robustness:
 			self.tree = tree.right
 			val_array, time_values = self.Eval(system, next_interval)
 			if phi_interval[-1] != float('inf'):
-				time_values = np.array([time_values, time_values[-1] + phi_interval[-1]])
-				val_array = np.array([val_array, val_array[-1]])
+				time_values = np.append(time_values, time_values[-1] + phi_interval[-1])
+				val_array = np.append(val_array, val_array[-1])
 			value_arr = np.empty([1])
 			time_arr = np.empty([1])
 			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + \
@@ -148,16 +149,19 @@ class Robustness:
 			next_interval = phi_interval + np.array(interval[0],interval[-1])
 			self.tree = tree.right
 			val_array, time_values = self.Eval(system, next_interval)
+
 			if phi_interval[-1] != float('inf'):
-				time_values = np.array([time_values, time_values[-1] + phi_interval[-1]])
-				val_array = np.array([val_array, val_array[-1]])
+				time_values = np.append(time_values, time_values[-1] + phi_interval[-1])
+				val_array = np.append(val_array, val_array[-1])
 			value_arr = np.empty([1])
 			time_arr = np.empty([1])
+
+
 			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + \
-												   phi_interval[0]).all())
+												   phi_interval[0]))
 			for index in range(1, len(time_values[find_interval])):
 				find_phi = np.where(np.logical_and(time_values >= time_values[index -1], time_values <= time_values[index -1] + \
-												   phi_interval[-1]-phi_interval[0]).all())
+												   phi_interval[-1]-phi_interval[0]))
 				value_arr = np.append(value_arr, np.min(val_array[index -1 :index + len(time_values[find_phi]) - 1]))
 				time_arr = np.append(time_arr, time_values[index-1]-phi_interval[0])
 			return value_arr, time_arr
@@ -211,10 +215,10 @@ class Robustness:
 			self.tree = tree.right
 			value_arr2, time_values2 = self.Eval(system, interval2)
 			if unt_interval[-1] != float('inf'):
-				time_values1 = np.array([time_values1, time_values1[-1] + unt_interval[-1]])
-				value_arr1  = np.array([value_arr1,value_arr1[-1]])
-				time_values2 = np.array([time_values2, time_values2[-1] + unt_interval[-1]])
-				value_arr2 = np.array([value_arr2, value_arr2[-1]])
+				time_values1 = np.append(time_values1, time_values1[-1] + unt_interval[-1])
+				value_arr1  = np.append(value_arr1,value_arr1[-1])
+				time_values2 = np.append(time_values2, time_values2[-1] + unt_interval[-1])
+				value_arr2 = np.append(value_arr2, value_arr2[-1])
 
 
 			value_arr = np.empty([1])
