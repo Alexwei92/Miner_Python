@@ -105,11 +105,13 @@ class Robustness:
 			ind_tf = np.nonzero(system.time >= interval[-1])[0][0]
 
 			if not ind_tf:
-				time_values = np.append(time_values, system.time[ind_ti:-1], interval[-1])
+				time_values = np.append(time_values, system.time[ind_ti:-1])
+				time_values = np.append(time_values,interval[-1])
 			elif system.time[ind_tf] == interval[-1]:
 				time_values = np.append(time_values, system.time[ind_ti:ind_tf])
 			else:
-				time_values = np.append(time_values, system.time[ind_ti: ind_tf - 1], interval[-1])
+				time_values = np.append(time_values, system.time[ind_ti: ind_tf - 1])
+				time_values = np.append(time_values, interval[-1])
 
 		return time_values
 
