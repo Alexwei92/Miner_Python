@@ -18,6 +18,6 @@
 
 # To store some reference list
 OPERATOR       = ['ev_','alw_','not_','until_','and_','or_']
-SPECIAL_CHAR_1 = ['[',']','(',')','<','>','+','-','*','/']
+SPECIAL_CHAR_1 = ['[',']','(',')','<','>']
 SPECIAL_CHAR_2 = ['>=','<=']
 SPECIAL_CHAR_4 = ['TRUE']

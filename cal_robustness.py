@@ -1,27 +1,27 @@
 #!/usr/local/bin/python3
 
 import sys
-from create_tree import *
-from other  import*
+from read_formula import *
+from create_tree import*
+from binary_tree import*
 
 # Print out control
 def print_out(value, flag, show):
 	if not show: return
 	else: 
 		print("-"*50)
-		if flag == "raw":
-			print("The raw formula is:\n", value)
-		elif flag == "prep":
-			print("The preprocessed formula is:\n", value)
-		elif flag == "list":
+		if flag is "raw":
+			print("The raw formula is:\n", value[0])
+			print("The State(s) is(are):\n", value[1])
+		elif flag is "list":
 			print("The formula list is:\n", value)
-		elif flag == "compress_list":
+		elif flag is "compress_list":
 			print("The compressed formula is:\n", value)
-		elif flag == "tree_formula":
+		elif flag is "tree_formula":
 			print("The tree formula is:")
 			print_tree(value)
 			print("")
-		elif flag == "tree_structure":
+		elif flag is "tree_structure":
 			print("The tree structure looks like:\n")
 			print_tree_indented(value)
 		else:
@@ -66,11 +66,9 @@ class Robustness:
 	def BiTree(self):
 		formula_str = read_file(self.formula_filename)
 		STATE = read_state(self.state_filename)
-		print_out(formula_str, "raw", self.option.SHOW_RAW)
-		print("The State(s) is(are):\n", STATE)
+		print_out([formula_str, STATE], "raw", self.option.SHOW_RAW)
 
-		formula_str = prep(formula_str)
-		print_out(formula_str, "prep", self.option.SHOW_PREP)
+		formula_str = preprocess(formula_str)
 		stat(formula_str, STATE, self.option.SHOW_STAT)
 
 		index = 0
@@ -205,9 +203,6 @@ class Robustness:
 			return value, interval
 
 # Robustness calculation
-
-
-
 class STL_Sys:
     def __init__(self,name,signal,time):
         self.name=name

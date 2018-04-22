@@ -1,6 +1,5 @@
 #!/usr/local/bin/python3
 
-from read_formula import *
 from binary_tree import Tree
 from fractions import Fraction
 import numpy as np
@@ -44,18 +43,20 @@ def convert_bracket(str):
 		str = str.split(",")
 		if len(str) != 2:
 			sys.exit("\033[1;31;47m SyntaxError: Missing content in bracket! \033[0m")	
-		elif float(get_fraction(str[0])) > float(get_fraction(str[1])):
-			sys.exit("\033[1;31;47m SyntaxError: In [a, b], b should be larger than a! \033[0m")
-		return [float(get_fraction(str[0])), float(get_fraction(str[1]))]
+		else:	
+			t1 = float(get_fraction(str[0]))
+			t2 = float(get_fraction(str[1]))
+			if t1 > t2:
+				sys.exit("\033[1;31;47m SyntaxError: In [a, b], b should be larger than a! \033[0m")
+			else: return [t1, t2]
 	except: 
 		sys.exit("\033[1;31;47m SyntaxError: Unknown Error in bracket! \033[0m")
 
 # Convert the predicate formula
-# !!!Need to add in the future!!!
 def convert_predict(formula_list):
 	new_list = list()
 	for x in formula_list:
-		if x.count('/') > 0 or x.count('.') > 0 or x.isdigit():
+		if set(x).intersection(set(['/', '.', '-', '+'])) or x.isdigit():
 			new_list.append(float(get_fraction(x)))
 		else: new_list.append(x)
 	return new_list
