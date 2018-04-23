@@ -92,33 +92,33 @@ class Robustness:
 		tree = self.tree
 		if tree is None: return 0
 
-		if tree.cargo == "ev":
-			left = tree.left
-			left = left.cargo
+		if tree.cargo['Value'] == "ev":
+			left = tree.cargo['Bound']
+			#left = left.cargo
 			self.tree = tree.right
 			interval_ev_t = np.array([left[0], left[1]])
 			value,interval_ev = self.Eval(system,interval_ev_t)
 			value = np.max(value)
 			return value, interval_ev
 
-		elif tree.cargo == "alw":
-			left = tree.left
-			left = left.cargo
+		elif tree.cargo['Value'] == "alw":
+			left = tree.cargo['Bound']
+			#left = left.cargo
 			self.tree = tree.right
 			interval_alw_t = np.array([left[0], left[1]])
 			value, interval_alw = self.Eval(system, interval_alw_t)
 			value = np.max(value)
 			return value, interval_alw
 
-		elif tree.cargo == "not":
-			left = tree.left   # is none for not operator
-			self_tree = tree.right
+		elif tree.cargo['Value'] == "not":
+			left = tree.cargo['Bound']  # is none for not operator
+			self.tree = tree.right
 			interval_not_t = interval
 			value, interval_not = self.Eval(system, interval_not_t)
 			return -value, interval_not
 
 
-		elif tree.cargo == "and":
+		elif tree.cargo['Value'] == "and":
 			self.tree = tree.left
 			robust_left,interval_left_t = self.Eval(system,interval)
 			self.tree = tree.right
@@ -131,7 +131,7 @@ class Robustness:
 			interval_and = np.array([interval_left, interval_right])
 			return value, interval_and
 
-		elif tree.cargo == "or":
+		elif tree.cargo['Value'] == "or":
 			self.tree = tree.left
 			robust_left, interval_left_t = self.Eval(system,interval)
 			self.tree = tree.right
@@ -144,10 +144,10 @@ class Robustness:
 			interval_and = np.array([interval_left, interval_right])
 			return value, interval_and
 
-		elif tree.cargo == "until":
-			left = tree.left
-			right_right = tree.right.right
-			right_left = tree.right.left
+		elif tree.cargo['Value'] == "until":
+			#left = tree.left
+			#right_right = tree.right.right
+			right_left = tree.cargo['Bound']
 			self.tree = tree.left
 			value_left, interval_left = self.Eval(system,interval)
 			if len(system.time) > 1:
@@ -155,24 +155,27 @@ class Robustness:
 			value = np.empty([1])
 			for index in range(1,len(interval_left)):
 				self.tree = tree.left
-				interval_1 = np.array([interval[0],interval[0] + (index-1)*delta_t])
+				interval_1 = np.array([interval[0],interval[0] + index*delta_t])
 				value_left, interval_1 = self.Eval(system, interval_1)
-				value_1 = np.min(value_left)
+				value_1 = np.amin(value_left, axis=0)
+				print(type(value_1))
 				start_time = interval_left[0] + (index-1)*delta_t+ right_left[0]
 				interval_un =  np.array([start_time, start_time + right_left[1]])
-				self.tree = tree.right.right
+				self.tree = tree.right
 				value_2_a, interval_un = self.Eval(system, interval_un)
-				value_2 = np.min(value_2_a)
-				value_t =np.min(value_1,value_2)
+				value_2 = np.amin(value_2_a,axis=0)
+				print(type(value_2))
+				print(type(value))
+				value_t =min(value_1,value_2)
 				value = np.append(value, value_t)
 
 			value = np.max(value)
 			return value, interval_left
 
-		elif tree.cargo[1] == "<" or  tree.cargo[1] == "<=":
-			 pi = tree.cargo[2]
-			 pi = convert_to_float(pi)
-			 ind = system.name.index(tree.cargo[0])
+		elif tree.cargo['Value'][1] == "<" or  tree.cargo['Value'][1] == "<=":
+			 pi = tree.cargo['Value'][2]
+			# pi = convert_to_float(pi)
+			 ind = system.name.index(tree.cargo['Value'][0])
 			 signal = system.signal[ind]
 			 time  =  system.time
 			 start_time = interval[0]
@@ -187,10 +190,9 @@ class Robustness:
 			 value = pi - signal[id_start:id_end]
 			 return value, interval
 
-		elif tree.cargo[1] == ">=" or tree.cargo[1] == ">":
-			pi = tree.cargo[2]
-			pi = convert_to_float(pi)
-			ind = system.name.index(tree.cargo[0])
+		elif tree.cargo['Value'][1] == ">=" or tree.cargo['Value'][1] == ">":
+			pi = tree.cargo['Value'][2]
+			ind = system.name.index(tree.cargo['Value'][0])
 			signal = system.signal[ind]
 			time = system.time
 			start_time = interval[0]
