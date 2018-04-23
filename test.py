@@ -27,4 +27,4 @@ if __name__ == '__main__':
 	# value, interval = Robust.Eval(system)
 	# print('\n',value)
 
-	print("<Elapsed Time = ", time()-START_TIME, "s >")
+	print("\n<Elapsed Time = %.6f" %(time()-START_TIME), "s>")

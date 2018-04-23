@@ -67,45 +67,59 @@ def get_tree(formula_list):
 		if len(formula_list) != 3:
 			sys.exit("\033[1;31;47m SyntaxError: Improper use of ev_! \033[0m")
 		else:
-			left = Tree(convert_bracket(formula_list[1][1:-1]),None,None)
+			left = None
 			right = get_tree(formula_list[2])
-			return Tree("ev",left,right)
+			return Tree({'Value': 'ev', 'Bound': convert_bracket(formula_list[1][1:-1])},left,right)
 	elif 'alw_' in formula_list:
 		if len(formula_list) != 3:
 			sys.exit("\033[1;31;47m SyntaxError: Improper use of alw_! \033[0m")
 		else:
-			left = Tree(convert_bracket(formula_list[1][1:-1]),None,None)
+			left = None
 			right = get_tree(formula_list[2])
-			return Tree("alw",left,right)
+			return Tree({'Value': 'alw', 'Bound': convert_bracket(formula_list[1][1:-1])},left,right)
 	elif 'not_' in formula_list:
 		if len(formula_list) != 2:
 			sys.exit("\033[1;31;47m SyntaxError: Improper use of not_! \033[0m")
 		else:
 			left = None
 			right = get_tree(formula_list[1])
-			return Tree("not",left,right)
+			return Tree({'Value': 'not', 'Bound': None},left,right)
 	elif 'and_' in formula_list:
 		if len(formula_list) != 3:
 			sys.exit("\033[1;31;47m SyntaxError: Improper use of and_! \033[0m")
 		else:
 			left = get_tree(formula_list[0])
 			right = get_tree(formula_list[2])
-			return Tree("and",left,right)
+			return Tree({'Value': 'and', 'Bound': None},left,right)
 	elif 'or_' in formula_list:
 		if len(formula_list) != 3:
 			sys.exit("\033[1;31;47m SyntaxError: Improper use of or_! \033[0m")
 		else:
 			left = get_tree(formula_list[0])
 			right = get_tree(formula_list[2])
-			return Tree("or",left,right)
+			return Tree({'Value': 'or', 'Bound': None},left,right)
 	elif 'until_' in formula_list:
 		if len(formula_list) != 4:
 			sys.exit("\033[1;31;47m SyntaxError: Improper use of until_! \033[0m")
 		else:
 			left = get_tree(formula_list[0])		
 			right = get_tree(formula_list[3])
-			cargo = "until"
-			cargo.append(formula_list[2])
-			return Tree(cargo,left,right)
+			return Tree({'Value': 'until', 'Bound': convert_bracket(formula_list[2][1:-1])},left,right)
 	else:
-		return Tree(convert_predict(formula_list), None, None)
+		return Tree({'Value': convert_predict(formula_list), 'Bound': None}, None,None)
+
+# automatically write the time bounds
+# def auto_timebound(tree, top_bound):
+# 	if tree.left is not None:
+# 		if tree.left.cargo['Bound'] is None: 
+# 			tree.left.cargo['Bound'] = tree.cargo['Bound']
+# 			new_timebound = tree.cargo['Bound']
+# 		else: new_timebound = tree.left.cargo['Bound']
+# 		auto_timebound(tree.left, new_timebound)
+# 	if tree.right is not None:
+# 		if tree.right.cargo['Bound'] is None: 
+# 			tree.right.cargo['Bound'] = tree.cargo['Bound']
+# 			new_timebound = tree.cargo['Bound']
+# 		else: new_timebound = tree.right.cargo['Bound']
+# 		auto_timebound(tree.right, new_timebound)
+# 	return tree

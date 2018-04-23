@@ -81,8 +81,12 @@ class Robustness:
 		print_out(formula_list, "compress_list", self.option.SHOW_COMP_LIST)
 
 		self.tree = get_tree(formula_list)
+		# self.tree = auto_timebound(self.tree, self.tree.cargo['Bound'])
+
 		print_out(self.tree, "tree_formula", self.option.SHOW_TREE_FORM)
 		print_out(self.tree, "tree_structure", self.option.SHOW_TREE_STRUC)
+
+
 
 	def Eval(self,system,interval=[]):
 		tree = self.tree
