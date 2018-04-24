@@ -24,6 +24,8 @@ def print_out(value, flag, show):
 		elif flag is "tree_structure":
 			print("The tree structure looks like:\n")
 			print_tree_indented(value)
+		elif flag is "robustness":
+			print("The robustness degree is: %.10f" %value)
 		else:
 			sys.exit("\033[1;31;47m\tError: Unrecognized flag to print_out!\t\033[0m")
 
@@ -36,6 +38,12 @@ def write_file(filename = "example_output.txt", Output = None):
     except:
         sys.exit("\033[1;31;47m Error: Unable to write to '%s'. \033[0m" %filename)
 
+# Robustness calculation
+class STL_Sys:
+    def __init__(self,name,signal,time):
+        self.name=name
+        self.signal=signal
+        self.time=time
 
 # If the user does not provide any filename, then execute
 # "example_formula.txt" and "example_state.txt" by default.
@@ -87,19 +95,20 @@ class Robustness:
 		print_out(self.tree, "tree_structure", self.option.SHOW_TREE_STRUC)
 
 
+
 	def GetTimeValues(self,system, interval):
 		if interval[0] == interval[-1]:
 			time_values = np.array(interval[0])
 			return time_values
 
 		ind_ti = np.nonzero(system.time >= interval[0])[0][0]
-# first time instant
+		# first time instant
 		if system.time[ind_ti] == interval[0]:
 			time_values = system.time[ind_ti]
 			ind_ti = ind_ti + 1
 		else:
 			time_values = np.array(interval[0])
-#Last time instant
+		# Last time instant
 		if interval[-1] == float('inf'):
 			time_values = np.append(time_values, system.time[ind_ti:-1])
 		else:
@@ -116,13 +125,11 @@ class Robustness:
 
 		return time_values
 
-	def Eval(self,system,interval=np.array([])):
+	def Eval(self, system, interval=np.array([])):
 		tree = self.tree
-		if tree is None:
-			return 0
-		if len(interval) == 0:
-			interval = np.array([0,0])
+		if tree is None: return 0
 
+		if len(interval) == 0: interval = np.array([0,0])
 
 		if tree.cargo['Value'] == 'ev':
 			phi_interval = tree.cargo['Bound']
@@ -138,7 +145,6 @@ class Robustness:
 			time_arr = np.empty([0])
 			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + \
 												   phi_interval[0]))[0]
-
 
 			for index in range(len(time_values[find_interval])):
 				find_phi = np.where(np.logical_and(time_values >= time_values[index], time_values <= time_values[index] + \
@@ -264,22 +270,9 @@ class Robustness:
 			id_duration =   np.where(np.logical_and(system.time >= time_values[0], system.time <= time_values[-1]))[0]
 			val_array = signal[id_duration] - tree.cargo['Value'][2]
 			return val_array, time_values
-# Robustness calculation
+		else:
+			sys.exit("\033[1;31;47m\t Error: Unrecognized character to evaluate!\t\033 [0m")
 
-class STL_Sys:
-    def __init__(self,name,signal,time):
-        self.name=name
-        self.signal=signal
-        self.time=time
-
-
-
-
-
-
-
-
-
-
-
-
+	def Eval_Robust(self, system, interval=np.array([])):
+		robustness, interval = self.Eval(system, interval)
+		print_out(robustness[0], "robustness", self.option.SHOW_ROBUST)

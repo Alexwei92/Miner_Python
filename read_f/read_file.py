@@ -1,3 +1,5 @@
+import sys
+
 def read_file(filename):
 	try:
 		with open(filename) as f:
