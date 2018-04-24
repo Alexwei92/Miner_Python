@@ -245,7 +245,7 @@ class Robustness:
 					value_arr_t = np.append(value_arr_t, np.amin(np.array([value_arr2[find_phi_2], np.amax(value_arr1[find_phi_1],\
 																										   axis=0)]), axis = 0))
 				value_arr =np.append(value_arr, np.amax(value_arr_t,axis =0))
-				value_arr_t =np.empty([1])
+				value_arr_t =np.empty([0])
 			return value_arr, system.time[find_interval]
 
 		elif tree.cargo['Value'][1] in ['<', '<=']:
