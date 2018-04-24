@@ -236,10 +236,10 @@ class Robustness:
 			for index in range(len(system.time[find_interval])):
 				phi_interval = np.array([system.time[find_interval[index]], system.time[find_interval[index]] + \
 										 unt_interval[-1]])
-				find_interval_u = np.where(np.logical_and(system.time >= phi_interval[0], system.time <= phi_interval[-1]))[0]
+				find_interval_u = np.where(np.logical_and(system.time >= phi_interval[0]+unt_interval[0], system.time <= phi_interval[-1]))[0]
 				for index_u in range(len(system.time[find_interval_u])):
 					find_phi_1 = np.where(np.logical_and(time_values1 >=system.time[find_interval[index]], time_values1 <= \
-														system.time[find_interval_u[index_u]]))[0]
+									system.time[find_interval_u[index_u]]-system.time[find_interval_u[0]]))[0]
 					find_phi_2 = np.where(np.logical_and(time_values2 >= system.time[find_interval_u[index_u]], time_values2 <=\
 														 phi_interval[-1]))[0]
 
