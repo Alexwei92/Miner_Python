@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3
 
 import sys
+from time import time
 from read_formula import *
 from create_tree import*
 from binary_tree import*
@@ -26,6 +27,8 @@ def print_out(value, flag, show):
 			print_tree_indented(value)
 		elif flag is "robustness":
 			print("The robustness degree is: %.10f" %value)
+		elif flag is "time":
+			print("\n<Elapsed Time = %.6f" %value, "s>")
 		else:
 			sys.exit("\033[1;31;47m\tError: Unrecognized flag to print_out!\t\033[0m")
 
@@ -58,6 +61,7 @@ class STL_Sys:
 
 class Robustness:
 	def __init__(self, argv, option):
+		self.START_TIME = time()
 		self.option = option
 		if len(argv) == 1:
 			self.formula_filename = "example_formula.txt"
@@ -276,3 +280,4 @@ class Robustness:
 	def Eval_Robust(self, system, interval=np.array([])):
 		robustness, interval = self.Eval(system, interval)
 		print_out(robustness[0], "robustness", self.option.SHOW_ROBUST)
+		print_out(time()-self.START_TIME, "time", self.option.SHOW_TIME)
