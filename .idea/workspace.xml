@@ -4,6 +4,7 @@
     <list default="true" id="5ad725eb-996a-4469-8287-3e66b37d2feb" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/cal_robustness.py" afterPath="$PROJECT_DIR$/cal_robustness.py" />
+      <change beforePath="$PROJECT_DIR$/example_formula.txt" afterPath="$PROJECT_DIR$/example_formula.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,22 +18,12 @@
       <file leaf-file-name="cal_robustness.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cal_robustness.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="247" column="42" lean-forward="true" selection-start-line="247" selection-start-column="42" selection-end-line="247" selection-end-column="42" />
+            <state relative-caret-position="459">
+              <caret line="246" column="77" lean-forward="true" selection-start-line="246" selection-start-column="77" selection-end-line="246" selection-end-column="77" />
               <folding>
                 <element signature="e#26#36#0" expanded="true" />
-                <element signature="e#11023#11132#0" expanded="false" />
+                <element signature="e#10998#11107#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="create_tree.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/create_tree.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -41,7 +32,7 @@
         <entry file="file://$PROJECT_DIR$/example_formula.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="2" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
+              <caret line="0" column="33" lean-forward="false" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -282,7 +273,14 @@
       <option name="project" value="LOCAL" />
       <updated>1524515834285</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Robustness calculation add until">
+      <created>1524529528413</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1524529528413</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -377,7 +375,7 @@
           <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
           <folding>
             <element signature="e#26#36#0" expanded="true" />
-            <element signature="e#11023#11132#0" expanded="false" />
+            <element signature="e#10998#11107#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -413,7 +411,7 @@
           <caret line="211" column="40" lean-forward="true" selection-start-line="211" selection-start-column="40" selection-end-line="211" selection-end-column="40" />
           <folding>
             <element signature="e#26#36#0" expanded="true" />
-            <element signature="e#11023#11132#0" expanded="false" />
+            <element signature="e#10998#11107#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -526,7 +524,7 @@
           <caret line="135" column="69" lean-forward="true" selection-start-line="135" selection-start-column="69" selection-end-line="135" selection-end-column="69" />
           <folding>
             <element signature="e#26#36#0" expanded="true" />
-            <element signature="e#11023#11132#0" expanded="false" />
+            <element signature="e#10998#11107#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -560,7 +558,7 @@
           <caret line="211" column="40" lean-forward="true" selection-start-line="211" selection-start-column="40" selection-end-line="211" selection-end-column="40" />
           <folding>
             <element signature="e#26#36#0" expanded="true" />
-            <element signature="e#11023#11132#0" expanded="false" />
+            <element signature="e#10998#11107#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -676,7 +674,7 @@
     <entry file="file://$PROJECT_DIR$/example_formula.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="2" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
+          <caret line="0" column="33" lean-forward="false" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
           <folding />
         </state>
       </provider>
@@ -693,11 +691,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cal_robustness.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="247" column="42" lean-forward="true" selection-start-line="247" selection-start-column="42" selection-end-line="247" selection-end-column="42" />
+        <state relative-caret-position="459">
+          <caret line="246" column="77" lean-forward="true" selection-start-line="246" selection-start-column="77" selection-end-line="246" selection-end-column="77" />
           <folding>
             <element signature="e#26#36#0" expanded="true" />
-            <element signature="e#11023#11132#0" expanded="false" />
+            <element signature="e#10998#11107#0" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -137,12 +137,12 @@ class Robustness:
 			value_arr = np.empty([0])
 			time_arr = np.empty([0])
 			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + \
-												   phi_interval[0]))
+												   phi_interval[0]))[0]
 
 
 			for index in range(len(time_values[find_interval])):
 				find_phi = np.where(np.logical_and(time_values >= time_values[index], time_values <= time_values[index] + \
-												   phi_interval[-1]-phi_interval[0]))
+												   phi_interval[-1]-phi_interval[0]))[0]
 
 				value_arr = np.append(value_arr, np.max(val_array[index :index + len(time_values[find_phi])]))
 
@@ -165,10 +165,10 @@ class Robustness:
 			time_arr = np.empty([0])
 
 			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + \
-												   phi_interval[0]))
+												   phi_interval[0]))[0]
 			for index in range(len(time_values[find_interval])):
 				find_phi = np.where(np.logical_and(time_values >= time_values[index], time_values <= time_values[index] + \
-												   phi_interval[-1]-phi_interval[0]))
+												   phi_interval[-1]-phi_interval[0]))[0]
 				value_arr = np.append(value_arr, np.min(val_array[index :index + len(time_values[find_phi])]))
 				time_arr = np.append(time_arr, time_values[index]-phi_interval[0])
 			return value_arr, time_arr
@@ -190,7 +190,7 @@ class Robustness:
 			start_time = np.max(np.array(time_values1[0], time_values2[0]))
 			end_time   = np.min(np.array(time_values1[-1], time_values2[-1]))
 
-			index_and = np.where(np.logical_and(time_values1 >= start_time, time_values1 <= end_time))
+			index_and = np.where(np.logical_and(time_values1 >= start_time, time_values1 <= end_time))[0]
 			time_values = time_values1[index_and]
 			val_array = np.amin(np.array([val_array1[index_and],val_array2[index_and]]),axis= 0)
 			return val_array, time_values
@@ -207,7 +207,7 @@ class Robustness:
 			start_time = np.max(np.array(time_values1[0], time_values2[0]))
 			end_time   = np.min(np.array(time_values1[-1], time_values2[-1]))
 
-			index_and = np.where(np.logical_and(time_values1 >= start_time, time_values1 <= end_time))
+			index_and = np.where(np.logical_and(time_values1 >= start_time, time_values1 <= end_time))[0]
 			time_values = time_values1[index_and]
 			val_array = np.amax(np.array([val_array1[index_and],val_array2[index_and]]),axis= 0)
 			return val_array, time_values
@@ -230,20 +230,20 @@ class Robustness:
 
 			value_arr = np.empty([0])
 			value_arr_t = np.empty([0])
-			interval_t = np.array([np.maximum(time_values1[0], time_values2[0]), np.minimum(time_values1[-1], time_values2[-1])])
-			find_interval = np.where(np.logical_and(system.time >= interval_t[0], system.time <= interval_t[-1]))
+			#interval_t = np.array([np.maximum(time_values1[0], time_values2[0]), np.minimum(time_values1[-1], time_values2[-1])])
+			find_interval = np.where(np.logical_and(system.time >= interval[0], system.time <= interval[-1]))[0]
 
 			for index in range(len(system.time[find_interval])):
 				phi_interval = np.array([system.time[find_interval[index]], system.time[find_interval[index]] + \
 										 unt_interval[-1]])
-				find_interval_u = np.where(np.logical_and(system.time >= phi_interval[0], system.time <= phi_interval[-1]))
+				find_interval_u = np.where(np.logical_and(system.time >= phi_interval[0], system.time <= phi_interval[-1]))[0]
 				for index_u in range(len(system.time[find_interval_u])):
 					find_phi_1 = np.where(np.logical_and(time_values1 >=system.time[find_interval[index]], time_values1 <= \
-														system.time[find_interval_u[index_u]]))
+														system.time[find_interval_u[index_u]]))[0]
 					find_phi_2 = np.where(np.logical_and(time_values2 >= system.time[find_interval_u[index_u]], time_values2 <=\
-														 phi_interval[-1]))
-					value_arr_t = np.append(value_arr_t, np.amin(np.array([value_arr2[find_phi_2], np.amax(value_arr1[find_phi_1],\
-																										   axis=0)]), axis = 0))
+														 phi_interval[-1]))[0]
+
+					value_arr_t = np.append(value_arr_t, np.amin(np.append(value_arr2[find_phi_2], min(value_arr1[find_phi_1]))))
 				value_arr =np.append(value_arr, np.amax(value_arr_t,axis =0))
 				value_arr_t =np.empty([0])
 			return value_arr, system.time[find_interval]
