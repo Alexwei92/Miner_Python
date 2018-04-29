@@ -8,7 +8,7 @@ from binary_tree import*
 # Print out control
 def print_out(value, flag, show):
 	if not show: return
-	else: 
+	else:
 		print("-"*50)
 		if flag is "raw":
 			print("The raw formula is:\n", value[0])
@@ -45,8 +45,8 @@ def write_file(filename = "example_output.txt", Output = None):
 
 # The program will first read the formula and state file, then print out the raw formula
 # and state. Unnecessary space and '\n' will be deleted afterward. A list is created from
-# the input string and printed out. A compressed list is then used to build the tree and 
-# show to the end-user. 
+# the input string and printed out. A compressed list is then used to build the tree and
+# show to the end-user.
 
 class Robustness:
 	def __init__(self, argv, option):
