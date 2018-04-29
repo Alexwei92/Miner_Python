@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5ad725eb-996a-4469-8287-3e66b37d2feb" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/cal_robustness.py" afterPath="$PROJECT_DIR$/cal_robustness.py" />
-      <change beforePath="$PROJECT_DIR$/example_formula.txt" afterPath="$PROJECT_DIR$/example_formula.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,8 +26,8 @@
       <file leaf-file-name="cal_robustness.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cal_robustness.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="761">
-              <caret line="246" column="97" lean-forward="true" selection-start-line="246" selection-start-column="97" selection-end-line="246" selection-end-column="97" />
+            <state relative-caret-position="1025">
+              <caret line="247" column="77" lean-forward="true" selection-start-line="247" selection-start-column="77" selection-end-line="247" selection-end-column="77" />
               <folding />
             </state>
           </provider>
@@ -70,7 +69,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="width" value="1346" />
     <option name="height" value="688" />
@@ -294,13 +293,12 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-13" y="-13" width="3026" height="1946" extended-state="7" />
-    <editor active="true" />
+    <frame x="-13" y="-13" width="3026" height="1946" extended-state="6" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16833334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20474263" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20474263" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32851985" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -670,8 +668,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cal_robustness.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="761">
-          <caret line="246" column="97" lean-forward="true" selection-start-line="246" selection-start-column="97" selection-end-line="246" selection-end-column="97" />
+        <state relative-caret-position="1025">
+          <caret line="247" column="77" lean-forward="true" selection-start-line="247" selection-start-column="77" selection-end-line="247" selection-end-column="77" />
           <folding />
         </state>
       </provider>
