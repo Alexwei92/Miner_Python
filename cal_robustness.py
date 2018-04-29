@@ -4,6 +4,7 @@ import sys
 from read_formula import *
 from create_tree import*
 from binary_tree import*
+from time import time
 
 # Print out control
 def print_out(value, flag, show):
@@ -24,6 +25,10 @@ def print_out(value, flag, show):
 		elif flag is "tree_structure":
 			print("The tree structure looks like:\n")
 			print_tree_indented(value)
+		elif flag is "robustness":
+			print("The robustness is: %.8f" %value[0])
+		elif flag is "time":
+			print("<Elapsed time: %.8f s>" %value)
 		else:
 			sys.exit("\033[1;31;47m\tError: Unrecognized flag to print_out!\t\033[0m")
 
@@ -50,6 +55,7 @@ def write_file(filename = "example_output.txt", Output = None):
 
 class Robustness:
 	def __init__(self, argv, option):
+		self.START_TIME = time()
 		self.option = option
 		if len(argv) == 1:
 			self.formula_filename = "example_formula.txt"
@@ -118,13 +124,11 @@ class Robustness:
 
 	def Eval(self,system,interval=np.array([])):
 		tree = self.tree
-		if tree is None:
-			return 0
-		if len(interval) == 0:
-			interval = np.array([0,0])
+		if tree is None: return 0
 
+		if len(interval) == 0: interval = np.array([0,0])
 
-		if tree.cargo['Value'] == 'ev':
+		if tree.cargo['Value'] is 'ev':
 			phi_interval = tree.cargo['Bound']
 			phi_interval = np.amax(np.array([np.array([phi_interval[0], phi_interval[-1]]),np.array([0, 0])]),axis= 0)
 			phi_interval[0] = np.min(phi_interval)
@@ -147,7 +151,7 @@ class Robustness:
 				time_arr = np.append(time_arr, time_values[index]-phi_interval[0])
 			return value_arr, time_arr
 
-		elif tree.cargo['Value'] == 'alw':
+		elif tree.cargo['Value'] is 'alw':
 			phi_interval = tree.cargo['Bound']
 			phi_interval = np.amax(np.array([np.array([phi_interval[0], phi_interval[-1]]),np.array([0, 0])]),axis= 0)
 			phi_interval[0] = np.min(phi_interval)
@@ -171,12 +175,12 @@ class Robustness:
 
 			return value_arr, time_arr
 
-		elif tree.cargo['Value'] == 'not':
+		elif tree.cargo['Value'] is 'not':
 			self.tree = tree.right
 			val_array, time_values = self.Eval(system, interval)
 			return -val_array, time_values
 
-		elif tree.cargo['Value'] == 'and':
+		elif tree.cargo['Value'] is 'and':
 			self.tree = tree.left
 			val_array1, time_values1 = self.Eval(system, interval)
 			self.tree = tree.right
@@ -193,7 +197,7 @@ class Robustness:
 			val_array = np.amin(np.array([val_array1[index_and],val_array2[index_and]]),axis= 0)
 			return val_array, time_values
 
-		elif tree.cargo['Value'] == 'or':
+		elif tree.cargo['Value'] is 'or':
 			self.tree = tree.left
 			val_array1, time_values1 = self.Eval(system, interval)
 			self.tree = tree.right
@@ -210,7 +214,7 @@ class Robustness:
 			val_array = np.amax(np.array([val_array1[index_and],val_array2[index_and]]),axis= 0)
 			return val_array, time_values
 
-		elif tree.cargo['Value'] == "until":
+		elif tree.cargo['Value'] is "until":
 			unt_interval = tree.cargo['Bound']
 			unt_interval = np.amax(np.array([np.array([unt_interval[0], unt_interval[-1]]),np.array([0, 0])]),axis= 0)
 			unt_interval[0] = np.min(unt_interval)
@@ -265,7 +269,12 @@ class Robustness:
 			id_duration =   np.where(np.logical_and(system.time >= time_values[0], system.time <= time_values[-1]))[0]
 			val_array = signal[id_duration] - tree.cargo['Value'][2]
 			return val_array, time_values
-# Robustness calculation
+
+	def Eval_robustness(self, system):	
+		val,t = self.Eval(system)
+		print_out(val, "robustness", self.option.SHOW_ROBUST)
+		print_out(time()-self.START_TIME, "time", self.option.SHOW_TIME)
+
 
 class STL_Sys:
     def __init__(self,name,signal,time):

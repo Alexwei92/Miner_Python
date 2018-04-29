@@ -12,7 +12,7 @@ class OPTION:
 	SHOW_TREE_STRUC = True
 	SHOW_STAT       = False
 	SHOW_ROBUST		= True
-	SHOW_TIME		= False
+	SHOW_TIME		= True
 
 def run_program():
 	# Read formula and state
@@ -22,12 +22,11 @@ def run_program():
 
 	time1 = np.linspace(0,10,1001)
 	signal = np.array([time1])
-
 	name = ['x1']
 	system = STL_Sys(name,signal,time1)
+
 	# Calculate robustness
-	val,time = Robust.Eval(system)
-	print(val)
+	Robust.Eval_robustness(system)
 
 if __name__ == '__main__':
 	run_program()
