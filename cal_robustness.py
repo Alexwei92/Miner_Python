@@ -247,8 +247,10 @@ class Robustness:
 					find_phi_2 = np.where(np.logical_and(time_values2 >= system.time[find_interval_u[index_u]], time_values2 <=\
 														 phi_interval[-1]))[0]
 					# [t', t+b]
+					np.append(value_arr1[find_phi_1],value_arr2[find_phi_2[0]])
+					value_arr_t = np.append(value_arr_t, np.min(value_arr1[find_phi_1]))
 
-					value_arr_t = np.append(value_arr_t, np.amin(np.append(value_arr2[find_phi_2[0]], min(value_arr1[find_phi_1]))))
+					#value_arr_t = np.append(value_arr_t, np.amin(np.append(value_arr2[find_phi_2[0]], min(value_arr1[find_phi_1]))))
 				value_arr =np.append(value_arr, np.amax(value_arr_t,axis =0))
 				value_arr_t =np.empty([0])
 			return value_arr, system.time[find_interval]
