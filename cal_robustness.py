@@ -128,7 +128,7 @@ class Robustness:
 			phi_interval = tree.cargo['Bound']
 			phi_interval = np.amax(np.array([np.array([phi_interval[0], phi_interval[-1]]),np.array([0, 0])]),axis= 0)
 			phi_interval[0] = np.min(phi_interval)
-			next_interval = phi_interval + np.array(interval[0],interval[-1])
+			next_interval = phi_interval + np.array([interval[0],interval[-1]])
 			self.tree = tree.right
 			val_array, time_values = self.Eval(system, next_interval)
 			if phi_interval[-1] != float('inf'):
@@ -138,8 +138,6 @@ class Robustness:
 			time_arr = np.empty([0])
 			find_interval= np.where(np.logical_and(time_values >= phi_interval[0]+ interval[0], time_values <= interval[-1] + \
 												   phi_interval[0]))[0]
-
-
 			for index in range(len(time_values[find_interval])):
 				find_phi = np.where(np.logical_and(time_values >= time_values[index], time_values <= time_values[index] + \
 												   phi_interval[-1]-phi_interval[0]))[0]
@@ -147,14 +145,13 @@ class Robustness:
 				value_arr = np.append(value_arr, np.max(val_array[index :index + len(time_values[find_phi])]))
 
 				time_arr = np.append(time_arr, time_values[index]-phi_interval[0])
-
 			return value_arr, time_arr
 
 		elif tree.cargo['Value'] == 'alw':
 			phi_interval = tree.cargo['Bound']
 			phi_interval = np.amax(np.array([np.array([phi_interval[0], phi_interval[-1]]),np.array([0, 0])]),axis= 0)
 			phi_interval[0] = np.min(phi_interval)
-			next_interval = phi_interval + np.array(interval[0],interval[-1])
+			next_interval = phi_interval + np.array([interval[0],interval[-1]])
 			self.tree = tree.right
 			val_array, time_values = self.Eval(system, next_interval)
 
@@ -187,8 +184,8 @@ class Robustness:
 			if len(val_array1) != len(time_values1) or len(val_array2) != len(time_values2):
 				print('RobustAnd: lengths of time steps and signal are different.')
 
-			start_time = np.max(np.array(time_values1[0], time_values2[0]))
-			end_time   = np.min(np.array(time_values1[-1], time_values2[-1]))
+			start_time = np.max(np.array([time_values1[0], time_values2[0]]))
+			end_time   = np.min(np.array([time_values1[-1], time_values2[-1]]))
 
 			index_and = np.where(np.logical_and(time_values1 >= start_time, time_values1 <= end_time))[0]
 			time_values = time_values1[index_and]
@@ -204,8 +201,8 @@ class Robustness:
 			if len(val_array1) != len(time_values1) or len(val_array2) != len(time_values2):
 				print('RobustAnd: lengths of time steps and signal are different.')
 
-			start_time = np.max(np.array(time_values1[0], time_values2[0]))
-			end_time   = np.min(np.array(time_values1[-1], time_values2[-1]))
+			start_time = np.max(np.array([time_values1[0], time_values2[0]]))
+			end_time   = np.min(np.array([time_values1[-1], time_values2[-1]]))
 
 			index_and = np.where(np.logical_and(time_values1 >= start_time, time_values1 <= end_time))[0]
 			time_values = time_values1[index_and]
@@ -217,7 +214,7 @@ class Robustness:
 			unt_interval = np.amax(np.array([np.array([unt_interval[0], unt_interval[-1]]),np.array([0, 0])]),axis= 0)
 			unt_interval[0] = np.min(unt_interval)
 			interval1 = np.array([interval[0], unt_interval[-1]+interval[1]])
-			interval2 = unt_interval + np.array(interval[0],interval[-1])
+			interval2 = unt_interval + np.array([interval[0],interval[-1]])
 			self.tree = tree.left
 			value_arr1, time_values1 = self.Eval(system,interval1)
 			self.tree = tree.right

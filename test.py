@@ -19,7 +19,7 @@ if __name__ == '__main__':
 	Robust = Robustness(sys.argv, OPTION())
 	Robust.BiTree()
 	time1 = np.linspace(0,10,1001)
-	signal = np.array([np.sin(2*np.pi*time1) + np.cos(3*np.pi*time1)])
+	signal = np.array([time1])
 	name = ['x1']
 
 	system = STL_Sys(name,signal,time1)
