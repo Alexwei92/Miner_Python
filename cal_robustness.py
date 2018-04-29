@@ -232,14 +232,17 @@ class Robustness:
 			find_interval = np.where(np.logical_and(system.time >= interval[0], system.time <= interval[-1]))[0]
 
 			for index in range(len(system.time[find_interval])):
-				phi_interval = np.array([system.time[find_interval[index]], system.time[find_interval[index]] + \
+				phi_interval = np.array([system.time[find_interval[index]]+ unt_interval[0], system.time[find_interval[index]] + \
 										 unt_interval[-1]])
+				# [t+a,t+b]
 				find_interval_u = np.where(np.logical_and(system.time >= phi_interval[0], system.time <= phi_interval[-1]))[0]
 				for index_u in range(len(system.time[find_interval_u])):
 					find_phi_1 = np.where(np.logical_and(time_values1 >=system.time[find_interval[index]], time_values1 <= \
 														system.time[find_interval_u[index_u]]))[0]
+					#[t,t']
 					find_phi_2 = np.where(np.logical_and(time_values2 >= system.time[find_interval_u[index_u]], time_values2 <=\
 														 phi_interval[-1]))[0]
+					# [t', t+b]
 
 					value_arr_t = np.append(value_arr_t, np.amin(np.append(value_arr2[find_phi_2], min(value_arr1[find_phi_1]))))
 				value_arr =np.append(value_arr, np.amax(value_arr_t,axis =0))
