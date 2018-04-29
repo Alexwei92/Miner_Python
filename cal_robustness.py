@@ -228,6 +228,7 @@ class Robustness:
 
 			value_arr = np.empty([0])
 			value_arr_t = np.empty([0])
+			#print(time_values2)
 			#interval_t = np.array([np.maximum(time_values1[0], time_values2[0]), np.minimum(time_values1[-1], time_values2[-1])])
 			find_interval = np.where(np.logical_and(system.time >= interval[0], system.time <= interval[-1]))[0]
 
@@ -236,7 +237,8 @@ class Robustness:
 										 unt_interval[-1]])
 				# [t+a,t+b]
 				find_interval_u = np.where(np.logical_and(system.time >= phi_interval[0], system.time <= phi_interval[-1]))[0]
-				for index_u in range(len(system.time[find_interval_u])):
+				#print(find_interval_u)
+				for index_u in range(len(system.time[find_interval_u])-1):
 					find_phi_1 = np.where(np.logical_and(time_values1 >=system.time[find_interval[index]], time_values1 <= \
 														system.time[find_interval_u[index_u]]))[0]
 					#[t,t']
