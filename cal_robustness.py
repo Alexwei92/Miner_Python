@@ -168,6 +168,7 @@ class Robustness:
 												   phi_interval[-1]-phi_interval[0]))[0]
 				value_arr = np.append(value_arr, np.min(val_array[index :index + len(time_values[find_phi])]))
 				time_arr = np.append(time_arr, time_values[index]-phi_interval[0])
+
 			return value_arr, time_arr
 
 		elif tree.cargo['Value'] == 'not':
