@@ -249,6 +249,7 @@ class Robustness:
 					# [t', t+b]
 					np.append(value_arr1[find_phi_1],value_arr2[find_phi_2[0]])
 					value_arr_t = np.append(value_arr_t, np.min(value_arr1[find_phi_1]))
+					#robustness for one time clock
 
 					#value_arr_t = np.append(value_arr_t, np.amin(np.append(value_arr2[find_phi_2[0]], min(value_arr1[find_phi_1]))))
 				value_arr =np.append(value_arr, np.amax(value_arr_t,axis =0))
